@@ -25,10 +25,22 @@
 
 ## Funcionalidad Implementada
 
+Se desarrolló un módulo de historial de inicio de sesión que permite:
 
+1. **Registrar automáticamente** cada inicio de sesión exitoso con:
+   - Usuario autenticado
+   - Fecha y hora de inicio
+   - IP o dispositivo
+2. **Mostrar al usuario autenticado** su historial en una pantalla propia.
+3. **Ordenar el historial** del más reciente al más antiguo.
 
-
+---
 
 ## Evidencias (Capturas de Pantalla)
 
 
+<img src="./evidencia/evi1.PNG" width="300">
+
+<img src="./evidencia/evi2.PNG" width="300">
+
+<img src="./evidencia/evi3.PNG" width="300">

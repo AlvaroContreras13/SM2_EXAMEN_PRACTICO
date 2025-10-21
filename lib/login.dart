@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dashboard/admin_dashboard.dart';
 import 'screens/register_screen.dart';
 import 'screens/user_role_screen.dart';
+import 'services/login_history_service.dart'; 
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -15,6 +16,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController(text: '');
   final TextEditingController _passwordController = TextEditingController(text: '');
+  final LoginHistoryService _loginHistoryService = LoginHistoryService();
   bool _isPasswordVisible = false;
   String? _errorMessage;
   int _failedAttempts = 0;
@@ -63,6 +65,12 @@ class _LoginPageState extends State<LoginPage> {
 
       _failedAttempts = 0; // Reinicia el contador si el login es exitoso
 
+      
+      await _loginHistoryService.registrarInicioSesion(
+        userCredential.user!.uid,
+        userCredential.user!.email ?? '',
+      );
+
       // Verificar si existe en Firestore o crear perfil básico
       DocumentSnapshot userDoc = await FirebaseFirestore.instance
           .collection('users')
@@ -77,7 +85,7 @@ class _LoginPageState extends State<LoginPage> {
             .collection('users')
             .doc(userCredential.user!.uid)
             .set({
-          'firstName': email.split('@')[0], // Usar parte del email como nombre temporal
+          'firstName': email.split('@')[0], 
           'lastName': '',
           'email': email,
           'role': userRole,
@@ -88,7 +96,7 @@ class _LoginPageState extends State<LoginPage> {
           'rating': 5.0,
           'totalTrips': 0,
           'status': 'active',
-          'profileComplete': false, // Marcar que el perfil necesita completarse
+          'profileComplete': false, 
         });
       } else {
         // Si existe, obtener el rol del documento
@@ -102,7 +110,7 @@ class _LoginPageState extends State<LoginPage> {
             _errorMessage = 'Tu cuenta ha sido desactivada por el administrador.';
             _isLoading = false;
           });
-          return; // ⛔ Detiene el flujo del login
+          return; 
         }
       }
 
@@ -128,7 +136,7 @@ class _LoginPageState extends State<LoginPage> {
           destinationScreen = UserRoleScreen();
           break;
         default:
-          destinationScreen = UserRoleScreen(); // Pantalla de selección por defecto
+          destinationScreen = UserRoleScreen(); 
       }
 
       if (mounted) {
@@ -137,7 +145,6 @@ class _LoginPageState extends State<LoginPage> {
           MaterialPageRoute(builder: (_) => destinationScreen),
         );
       }
-
     } on FirebaseAuthException catch (e) {
       _failedAttempts++;
       if (_failedAttempts >= 5) {
@@ -196,7 +203,6 @@ class _LoginPageState extends State<LoginPage> {
   
   void _mostrarDialogoRecuperarContrasena(BuildContext context) {
     final TextEditingController emailController = TextEditingController();
-
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -226,7 +232,6 @@ class _LoginPageState extends State<LoginPage> {
                   );
                   return;
                 }
-
                 try {
                   await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
                   Navigator.of(context).pop(); // Cerrar el modal
@@ -254,7 +259,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF0F5FD), // Light blue background
+      backgroundColor: const Color(0xFFF0F5FD), 
       body: Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24.0),

@@ -4,6 +4,7 @@ import 'package:movuni/services/session_service.dart';
 import 'package:movuni/login.dart';
 import 'package:movuni/screens/active_trips_screen.dart';
 import 'package:movuni/screens/mis_reservas_screen.dart';
+import 'package:movuni/screens/historial_login_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../dashboard/conductor_dashboard.dart';
@@ -55,7 +56,6 @@ class _EstudianteDashboardState extends State<EstudianteDashboard> {
     try {
       final sessionService = SessionService();
       
-      
       if (mounted) {
         Navigator.pushAndRemoveUntil(
           context,
@@ -90,6 +90,13 @@ class _EstudianteDashboardState extends State<EstudianteDashboard> {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (_) => const MisReservasScreen()),
+    );
+  }
+
+  void _verHistorialLogin(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => const HistorialLoginScreen()),
     );
   }
 
@@ -157,7 +164,15 @@ class _EstudianteDashboardState extends State<EstudianteDashboard> {
                 title: const Text('Historial'),
                 onTap: () {
                   Navigator.pop(context);
-                  // TODO: Implementar historial de viajes del estudiante
+                 
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.login_outlined, color: Colors.blue),
+                title: const Text('Historial de Sesiones'),
+                onTap: () {
+                  Navigator.pop(context);
+                  _verHistorialLogin(context);
                 },
               ),
               ListTile(
@@ -248,7 +263,6 @@ class _EstudianteDashboardState extends State<EstudianteDashboard> {
                 ),
               ),
               const SizedBox(height: 20),
-
               // Resumen de reservas
               StreamBuilder<QuerySnapshot>(
                 stream: FirebaseFirestore.instance
@@ -444,18 +458,10 @@ class _EstudianteDashboardState extends State<EstudianteDashboard> {
                       onTap: () => _verMisReservas(context),
                     ),
                     _StudentOptionCard(
-                      title: 'Historial',
-                      icon: Icons.history,
-                      color: Colors.purple,
-                      onTap: () {
-                        // TODO: Implementar historial
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Funcionalidad próximamente disponible'),
-                            backgroundColor: Colors.orange,
-                          ),
-                        );
-                      },
+                      title: 'Historial Sesiones',
+                      icon: Icons.login_outlined,
+                      color: Colors.blue,
+                      onTap: () => _verHistorialLogin(context),
                     ),
                     _StudentOptionCard(
                       title: 'Perfil',
@@ -524,6 +530,7 @@ class _StudentOptionCard extends StatelessWidget {
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: color,
+                  fontSize: 13,
                 ),
               ),
             ],
