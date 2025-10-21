@@ -18,7 +18,7 @@
 - En la sección **"Historial de inicios de sesión"**, el usuario puede ver una lista con:
   - Usuario
   - Fecha y hora del inicio de sesión
-  - (Opcional si el docente lo solicita) IP o dispositivo
+  - IP
 - Los registros se muestran ordenados del más reciente al más antiguo.
 
 ---
