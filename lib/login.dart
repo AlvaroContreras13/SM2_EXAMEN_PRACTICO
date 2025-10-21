@@ -63,7 +63,7 @@ class _LoginPageState extends State<LoginPage> {
         password: password,
       );
 
-      _failedAttempts = 0; // Reinicia el contador si el login es exitoso
+      _failedAttempts = 0; 
 
       
       await _loginHistoryService.registrarInicioSesion(
@@ -77,7 +77,7 @@ class _LoginPageState extends State<LoginPage> {
           .doc(userCredential.user!.uid)
           .get();
 
-      String userRole = 'estudiante'; // Rol por defecto
+      String userRole = 'estudiante';
 
       if (!userDoc.exists) {
         // Si no existe en Firestore, crear un perfil básico

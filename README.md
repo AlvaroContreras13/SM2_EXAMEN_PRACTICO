@@ -4,7 +4,7 @@
 - **Curso:** Soluciones Móviles II
 - **Alumno:** Alvaro Javier Contreras Lipa
 - **Fecha:** 21/10/2025
-- **Repositorio GitHub:** 
+- **Repositorio GitHub:** https://github.com/AlvaroContreras13/SM2_EXAMEN_PRACTICO
 
 ---
 
